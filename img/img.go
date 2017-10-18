@@ -7,6 +7,7 @@ package img // import "periph.io/x/bootstrap/img"
 
 import (
 	"archive/zip"
+	"bufio"
 	"bytes"
 	"errors"
 	"fmt"
@@ -112,13 +113,21 @@ func FindPublicKey() string {
 // Flash flashes imgPath to dst.
 func Flash(imgPath, dst string) error {
 	switch runtime.GOOS {
-	case "linux", "darwin":
+	case "linux":
 		fmt.Printf("- Flashing (takes 2 minutes)\n")
 		if err := Run("dd", "bs=4m", "if="+imgPath, "of="+dst); err != nil {
 			return err
 		}
 		fmt.Printf("- Flushing I/O cache\n")
 		return Run("sync")
+	case "darwin":
+		fmt.Println("- Flashing not yet supported on mac, run the following command in a separate tab:")
+		fmt.Printf("sudo dd bs=4m if=%s of=%s status=progress\n\n", imgPath, dst)
+		fmt.Println("When the command is done, press enter here to resume.")
+		reader := bufio.NewReader(os.Stdin)
+		fmt.Print("Waiting for user input: ")
+		_, _ = reader.ReadString('\n')
+		return nil
 	default:
 		return errors.New("Flash() is not implemented on this OS")
 	}

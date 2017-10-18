@@ -298,7 +298,7 @@ func mainImpl() error {
 	} else {
 		fmt.Printf("Warning! This will blow up everything in %s\n\n", *sdCard)
 		fmt.Printf("This script has minimal use of 'sudo' for 'dd' and modifying the partitions\n\n")
-		if err := img.Flash(imgmod, *sdCard); err != nil {
+		if err := img.Flash(filepath.Join(rsc, imgmod), *sdCard); err != nil {
 			return err
 		}
 		fmt.Printf("\nYou can now remove the SDCard safely and boot your micro computer\n")
