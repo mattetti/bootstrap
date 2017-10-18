@@ -119,13 +119,6 @@ func Flash(imgPath, dst string) error {
 		}
 		fmt.Printf("- Flushing I/O cache\n")
 		return Run("sync")
-	// case "darwin":
-	// 	fmt.Printf("- Flashing (takes 2 minutes)\n")
-	// 	if err := Run("dd", "bs=4m", "--if", imgPath, "--of", dst); err != nil {
-	// 		return err
-	// 	}
-	// 	fmt.Printf("- Flushing I/O cache\n")
-	// 	return Run("sync")
 	default:
 		return errors.New("Flash() is not implemented on this OS")
 	}

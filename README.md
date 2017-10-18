@@ -38,13 +38,13 @@ On Mac, identify the disk of your SD card by running the following command:
 
 Unmount your SD card by using the disk identifier, to prepare it for copying
 data:
-```diskutil unmountDisk /dev/disk<disk# from diskutil>```
+```diskutil unmountDisk /dev/disk<disk#>```
 
 where disk is your BSD name e.g. ```diskutil unmountDisk /dev/disk4```
 
 ```
 go install periph.io/x/bootstrap/cmd/...
-go run main.go -manufacturer=raspberrypi -wifi-ssid <ssid> -wifi-pass <pwd> -sdcard=</dev/diskX>
+flash-exp -manufacturer=raspberrypi -wifi-ssid <ssid> -wifi-pass <pwd> -sdcard=</dev/diskX>
 ```
 
 `flash` takes care of all the steps below on the micro computer's initial boot.
