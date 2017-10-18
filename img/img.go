@@ -112,13 +112,20 @@ func FindPublicKey() string {
 // Flash flashes imgPath to dst.
 func Flash(imgPath, dst string) error {
 	switch runtime.GOOS {
-	case "linux":
+	case "linux", "darwin":
 		fmt.Printf("- Flashing (takes 2 minutes)\n")
-		if err := Run("dd", "bs=4M", "if="+imgPath, "of="+dst); err != nil {
+		if err := Run("dd", "bs=4m", "if="+imgPath, "of="+dst); err != nil {
 			return err
 		}
 		fmt.Printf("- Flushing I/O cache\n")
 		return Run("sync")
+	// case "darwin":
+	// 	fmt.Printf("- Flashing (takes 2 minutes)\n")
+	// 	if err := Run("dd", "bs=4m", "--if", imgPath, "--of", dst); err != nil {
+	// 		return err
+	// 	}
+	// 	fmt.Printf("- Flushing I/O cache\n")
+	// 	return Run("sync")
 	default:
 		return errors.New("Flash() is not implemented on this OS")
 	}

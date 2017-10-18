@@ -30,11 +30,21 @@ for portability:
 
 This example downloads the Raspbian Stretch Lite image and flashes it to an SD
 card. You must supply the path to the SD card, generally in the form of
-`/dev/sdX` or `/dev/mmcblkN`. This only works on linux for now.
+`/dev/sdX` or `/dev/mmcblkN`.
+
+On Mac, identify the disk of your SD card by running the following command:
+`diskutil list`. You are looking for a disk, not a partition, for instance:
+`disk4`, not `disk4s1`.
+
+Unmount your SD card by using the disk identifier, to prepare it for copying
+data:
+```diskutil unmountDisk /dev/disk<disk# from diskutil>```
+
+where disk is your BSD name e.g. ```diskutil unmountDisk /dev/disk4```
 
 ```
 go install periph.io/x/bootstrap/cmd/...
-flash -manufacturer raspberrypi --wifi <ssid> <pwd> /dev/sdh
+go run main.go -manufacturer=raspberrypi -wifi-ssid <ssid> -wifi-pass <pwd> -sdcard=</dev/diskX>
 ```
 
 `flash` takes care of all the steps below on the micro computer's initial boot.
